@@ -24,15 +24,19 @@ video {
 </head>
 <body>
 
-<video id="videoPlayer"
-       autoplay
-       loop
-       playsinline
-       muted
+<video id="videoPlayer" autoplay loop muted playsinline
        src="Instructions.mp4">
+    Your browser does not support the video tag.
 </video>
 
-
+<script>
+function side() {
+    const video = document.getElementById("videoPlayer");
+    video.src = "sideInstruction.mp4";
+    video.load();
+    video.play();
+}
+</script>
 
 </body>
 </html>
