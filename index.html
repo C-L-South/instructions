@@ -10,11 +10,12 @@ html, body {
     margin: 0;
     width: 100%;
     height: 100%;
-    background: black;
+    background: white;
     overflow: hidden;
 }
 
 video {
+    visibility: hidden;
     width: 100vw;
     height: 100vh;
     object-fit: cover;
@@ -24,17 +25,42 @@ video {
 </head>
 <body>
 
-<video id="videoPlayer" autoplay loop muted playsinline
+<video id="videoPlayer" loop muted playsinline preload="auto"
        src="Instructions.mp4">
     Your browser does not support the video tag.
 </video>
 
 <script>
+const video = document.getElementById("videoPlayer");
+
+function hideVideo() {
+    video.style.visibility = "hidden";
+}
+
+video.addEventListener("loadstart", hideVideo);
+video.addEventListener("emptied", hideVideo);
+video.addEventListener("error", hideVideo);
+
+// Start only once the browser has enough data to play through.
+video.addEventListener("canplaythrough", () => {
+    video.play().catch(hideVideo);
+});
+
+video.addEventListener("playing", () => {
+    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+        video.style.visibility = "visible";
+    }
+});
+
 function side() {
-    const video = document.getElementById("videoPlayer");
+    hideVideo();
     video.src = "sideInstruction.mp4";
     video.load();
-    video.play();
+}
+
+// Handle a video that finished loading before the listeners were attached.
+if (video.readyState === HTMLMediaElement.HAVE_ENOUGH_DATA) {
+    video.play().catch(hideVideo);
 }
 </script>
 
