@@ -26,7 +26,7 @@ video {
 <body>
 
 <video id="videoPlayer" loop muted playsinline preload="auto"
-       src="Instructions.mp4">
+       src="newInstructions.mp4">
     Your browser does not support the video tag.
 </video>
 
@@ -52,11 +52,6 @@ video.addEventListener("playing", () => {
     }
 });
 
-function side() {
-    hideVideo();
-    video.src = "sideInstruction.mp4";
-    video.load();
-}
 
 // Handle a video that finished loading before the listeners were attached.
 if (video.readyState === HTMLMediaElement.HAVE_ENOUGH_DATA) {
